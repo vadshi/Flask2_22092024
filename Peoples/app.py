@@ -41,10 +41,11 @@ def get_names():
     with open("./files/names.txt", encoding="utf-8") as f:
         for raw_line in f:
             names.append(raw_line.strip())
-        return "<br>".join(names)
+    return render_template("names.html", people_names=names)  # {"people_names": names}
 
 
 if __name__ == '__main__':
+    # sys.argv[0] - это имя файла, остальные аргументы - это параметры запуска файла
     if len(sys.argv) > 1 and sys.argv[1] == "--files":
         create_files()
     app.run(debug=True)
