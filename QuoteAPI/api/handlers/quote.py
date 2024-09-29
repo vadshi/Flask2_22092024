@@ -6,6 +6,7 @@ from flask import jsonify, abort, request
 from . import validate
 from sqlalchemy.exc import InvalidRequestError
 from http import HTTPStatus
+from sqlalchemy import func
 
 
 # URL: /quotes
@@ -91,6 +92,13 @@ def delete_quote(quote_id: int):
     except Exception as e:
         db.session.rollback()
         abort(503, f"Database error: {str(e)}")
+
+
+@app.get("/quotes/count")
+def quotes_count():
+    """Function to count all quotes."""
+    count = db.session.scalar(func.count(QuoteModel.id))
+    return jsonify(count=count), 200
 
 
 @app.route("/quotes/filter")
