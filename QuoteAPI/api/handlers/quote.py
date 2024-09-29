@@ -3,6 +3,7 @@ from api.models.quote import QuoteModel
 from api.models.author import AuthorModel
 from typing import Any
 from flask import jsonify, abort, request
+from . import validate
 
 
 # URL: /quotes
