@@ -95,7 +95,6 @@ def delete_quote(quote_id: int):
 
 @app.route("/quotes/filter")
 def filter_quotes():
-    print(f'{request.args = }')
     try:
         data = request.args.copy()
         quotes = db.session.execute(db.select(QuoteModel).filter_by(**data)).scalars()
