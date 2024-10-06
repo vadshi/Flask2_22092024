@@ -22,3 +22,4 @@ class QuoteSchema(ma.SQLAlchemySchema):
 
 quote_schema = QuoteSchema()
 quotes_schema = QuoteSchema(many=True)
+quote_without_rating = QuoteSchema(exclude=["rating"])
