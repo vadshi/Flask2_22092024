@@ -10,9 +10,10 @@ class AuthorModel(db.Model):
     name: Mapped[int] = mapped_column(String(32), index=True, unique=True)
     # default -> for new instance, server_default -> for instances that already exist in table
     surname: Mapped[str] = mapped_column(String(32), index=True, default='Petrov', server_default="Smirnov")
-    quotes: Mapped[WriteOnlyMapped] = relationship(back_populates='author')
+    quotes: Mapped[list['QuoteModel']] = relationship(back_populates='author', cascade="all, delete-orphan", lazy='dynamic')
 
-    def __init__(self, name, surname):
+
+    def __init__(self, name, surname='Petrov'):
         self.name = name
         self.surname = surname
 
