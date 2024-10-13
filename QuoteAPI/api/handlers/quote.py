@@ -41,7 +41,7 @@ def get_quote(quote_id: int) -> dict:
 @app.route("/authors/<int:author_id>/quotes", methods=['POST'])
 @multi_auth.login_required
 def create_quote(author_id):
-    print("user =", multi_auth.current_user())
+    # print("user =", multi_auth.current_user()) # Получение текущего юзера из контекста
     try:
         data = quote_schema.loads(request.data)
     except ValidationError as ve:
