@@ -9,8 +9,7 @@ from marshmallow import ValidationError
 @app.route('/users', methods=['POST'])
 def create_user():
     try:
-        user_data = user_schema.loads(request.data) # get_data
-        user = UserModel(**user_data)
+        user = user_schema.loads(request.data) # get new user
         db.session.add(user)
         db.session.commit()
     except ValidationError as ve:
