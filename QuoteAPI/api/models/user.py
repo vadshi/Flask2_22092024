@@ -1,7 +1,10 @@
 from passlib.apps import custom_app_context as pwd_context
 from api import db
+from config import Config
 import sqlalchemy.orm as so
 import sqlalchemy as sa
+from itsdangerous import URLSafeSerializer
+from itsdangerous import BadSignature
 
 
 class UserModel(db.Model):
@@ -20,3 +23,19 @@ class UserModel(db.Model):
 
     def verify_password(self, password):
         return pwd_context.verify(password, self.password_hash)
+    
+    def generate_auth_token(self):
+        s = URLSafeSerializer(Config.SECRET_KEY)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verify_auth_token(token):
+        s = URLSafeSerializer(Config.SECRET_KEY)
+        try:
+            data = s.loads(token)
+        except BadSignature:
+            return None  # invalid token
+        # user = UserModel.query.get(data['id'])
+        user = db.get_or_404(UserModel, data['id'])
+        return user
+
