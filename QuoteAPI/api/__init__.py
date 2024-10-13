@@ -47,3 +47,7 @@ from api.handlers import author
 from api.handlers import quote
 from api.handlers import user
 from api.handlers import token
+
+# Add auth blueprint
+from api.auth.views import auth as bp_auth
+app.register_blueprint(bp_auth)
